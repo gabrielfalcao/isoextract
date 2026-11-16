@@ -1,32 +1,25 @@
 [package]
 name = "isoextract"
-version = "0.0.1"
-description = "isoextract command-line"
+version = "0.1.2"
+description = "parse, apply contrast algorithms to ANSI RGB colors and print text powered by a simple template language"
 readme = "README.md"
-homepage = "https://crates.io/crates/isoextract"
 license = "MIT OR Apache-2.0"
 edition = "2024"
 autoexamples = false
 autobenches = false
-# default-run = "isoextract"
+autotests = false
 
-# categories = [] # https://crates.io/category_slugs
+homepage = "https://crates.io/crates/isoextract"
+documentation = "https://docs.rs/isoextract"
+repository = "https://github.com/gabrielfalcao/isoextract"
 
+keywords = ["color", "ansi", "unix", "system"]
+authors = ["Gabriel DeMoura <gabrielteratos@gmail.com>"]
+categories = ["command-line-interface"]
+# default-run = "hex-to-bin"
+# # default-run = "terminal-info"
+# # default-run = "contrast"
 
-[package.metadata]
-targets = [
-    # "aarch64-apple-darwin",
-    # "x86_64-unknown-linux-gnu",
-    # "aarch64-unknown-linux-gnu",
-]
-
-[profile.release] # https://github.com/johnthagen/min-sized-rust
-strip = true  # Automatically strip symbols from the binary.
-opt-level = "z"  # Optimize for size. https://doc.rust-lang.org/cargo/reference/profiles.html#opt-level
-lto = true
-panic = "abort"
-codegen-units = 1
-# https://github.com/johnthagen/min-sized-rust?tab=readme-ov-file#remove-fmtdebug
 
 
 
@@ -55,4 +48,3 @@ thiserror = "2.0.21"
 
 [dev-dependencies]
 pretty_assertions = "1.4.1"
-

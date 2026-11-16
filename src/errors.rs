@@ -1,5 +1,5 @@
 use std::fmt::Display;
-
+use isomage;
 use serde::{Deserialize, Serialize};
 
 use thiserror::Error as ThisError;
@@ -9,6 +9,8 @@ pub enum Error {
     IOError(#[from] std::io::Error),
     #[error("I/O Error {0}")]
     IOCoreError(#[from] iocore::Error),
+    #[error("ISO Extract Error {0}")]
+    ISOExtractError(#[from] isomage::Error),
 
     #[error("Runtime Error {0}")]
     RuntimeError(String),

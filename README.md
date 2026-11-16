@@ -1,11 +1,9 @@
-# isoextract
+# isoextract - extract ISO files in their parent directories by default or elsewhere you designate
 
 
+## Usage
 
-
-
-Generated via `cargo craft`:
-
-```shell
-[2026/11/16 11:27:10 UTC] '/Users/gabrielfalcao/.cargo/bin/cargo-craft' 'craft' -csma -d 'isomage' -- 'isoextract'
+```bash
+mkdir -p  ~/my-iso/
+isoextract my-file.iso ~/my-iso/
 ```
