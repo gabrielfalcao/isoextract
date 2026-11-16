@@ -13,7 +13,7 @@ homepage = "https://crates.io/crates/isoextract"
 documentation = "https://docs.rs/isoextract"
 repository = "https://github.com/gabrielfalcao/isoextract"
 
-keywords = ["color", "ansi", "unix", "system"]
+keywords = ["ISO", "extractor", "unix", "system"]
 authors = ["Gabriel DeMoura <gabrielteratos@gmail.com>"]
 categories = ["command-line-interface"]
 # default-run = "hex-to-bin"
