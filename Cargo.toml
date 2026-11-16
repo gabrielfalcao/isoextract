@@ -1,7 +1,7 @@
 [package]
 name = "isoextract"
-version = "0.1.2"
-description = "parse, apply contrast algorithms to ANSI RGB colors and print text powered by a simple template language"
+version = "0.2.0"
+description = "extract ISO files into extract ISO files in their parent directories by default or elsewhere you designate"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2024"
