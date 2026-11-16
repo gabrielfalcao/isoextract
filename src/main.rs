@@ -1,60 +1,47 @@
+use std::fs::File;
+
 use clap::{Parser, Subcommand};
-
-use isoextract::{Error, Exit, Result};
-
-use isoextract::dispatch::{ArgsDispatcher, ParserDispatcher, SubcommandDispatcher};
+use iocore::Path;
+use isoextract::{
+    Error,
+    Exit,
+    Result,
+    dispatch::{ArgsDispatcher, ParserDispatcher, SubcommandDispatcher},
+};
+use isomage::{detect_and_parse_filesystem, extract_node};
 
 #[derive(Parser, Debug, Clone)]
 #[command(author, version, about, long_about = "isoextract command-line")]
-pub struct IsoextractCli {
-    #[command(subcommand)]
-    command: TopLevelCommand,
+pub struct Cli {
+    iso_file: Path,
+    output_dir: Option<Path>,
 }
-impl IsoextractCli {
-    pub fn command(&self) -> TopLevelCommand {
-        self.command.clone()
-    }
-}
-
-impl ParserDispatcher<Error> for IsoextractCli {
-    fn dispatch(&mut self) -> Result<()> {
-        self.command.dispatch()?;
-
-        Ok(())
-    }
-}
-
-#[derive(Subcommand, Debug, Clone)]
-pub enum TopLevelCommand {
-    Hello(HelloOpt),
-}
-impl SubcommandDispatcher<Error> for TopLevelCommand {
-    fn dispatch(&mut self) -> Result<()> {
-        match self {
-            TopLevelCommand::Hello(op) => op.dispatch()?,
+impl Cli {
+    pub fn file(&self) -> Result<Path> {
+        if self.iso_file.extension() == Some(".iso".to_string()) {
+            Ok(self.iso_file.clone())
+        } else {
+            Err(Error::RuntimeError(format!("not a iso file: {}", &self.iso_file)))
         }
-        Ok(())
     }
 }
 
-#[derive(Parser, Debug, Clone)]
-pub struct HelloOpt {
-    #[arg()]
-    text: Vec<String>,
-}
-impl HelloOpt {
-    pub fn text(&self) -> String {
-        self.text.join(" ")
-    }
-}
-impl ArgsDispatcher<Error> for HelloOpt {
+impl ParserDispatcher<Error> for Cli {
     fn dispatch(&mut self) -> Result<()> {
-        println!("{}", &self.text());
+        let iso_path = self.file()?;
+        let output_dir = self.output_dir.clone().unwrap_or_else(|| Path::cwd());
+
+        // Open the ISO image and automatically detect ISO 9660 or UDF
+        let mut file = File::open(iso_path)?;
+        let root = detect_and_parse_filesystem(&mut file, iso_path)?;
+
+        // Extract the entire root tree safely into the target directory
+        extract_node(&mut file, &root, output_dir)?;
 
         Ok(())
     }
 }
 
 fn main() -> Exit {
-    IsoextractCli::main()
+    Cli::main()
 }
