@@ -14,6 +14,7 @@ use isomage::{detect_and_parse_filesystem, extract_node};
 #[command(author, version, about, long_about = "isoextract command-line")]
 pub struct Cli {
     iso_file: Path,
+    #[arg(short, long)]
     output_dir: Option<Path>,
 }
 impl Cli {

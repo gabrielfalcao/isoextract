@@ -5,5 +5,5 @@
 
 ```bash
 mkdir -p  ~/my-iso/
-isoextract my-file.iso ~/my-iso/
+isoextract my-file.iso --output-dir ~/my-iso/
 ```
